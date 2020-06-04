@@ -21,8 +21,8 @@ session_id = f.read()
 f.close()
 
 
-conn = swat.CAS('pdcesx06182.exnet.sas.com', port=8777, protocol = 'http',
-             #'localhost',
+conn = swat.CAS(#'pdcesx06182.exnet.sas.com', port=8777, protocol = 'http',
+             'localhost', port = 5570
             caslib = 'casuser', username = 'sasdemo01',
             password = 'Orion123') #, session = session_id)
 
