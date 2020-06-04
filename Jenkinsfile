@@ -11,7 +11,7 @@ pipeline {
     stages {
       stage('Check Data') {
         steps {
-          sh "python verify_tables"
+          sh "python verify_tables.py"
             }
           }
       stage('Model Training') {
