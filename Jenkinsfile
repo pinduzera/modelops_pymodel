@@ -19,21 +19,16 @@ pipeline {
           sh "python training_code.py"
                 }
           }
+      stage('Model Upload & publish') {
+        steps {
+          sh "python model_upload.py"
+
+                }
+          }
 /*
       stage('Model Validation') {
         steps {
           sh "Rscript --vanilla model_validation.R"
-                }
-          }
-      stage('Testing Score Code') {
-        steps {
-          sh "Rscript --vanilla scoreTesting.R"
-                }
-          }
-      stage('Model Upload & publish') {
-        steps {
-          sh "python upload_model.py"
-
                 }
           }
       stage('Testing Publication') {
