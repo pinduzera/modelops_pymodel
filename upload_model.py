@@ -22,7 +22,7 @@ modelname = 'python_jk_lreg'
 
 project = 'hmeq_os'
 
-publishdestination = 'localmas'
+publishdestination = 'maslocal'
 
 data_path = './data/hmeq_score.csv'
 
