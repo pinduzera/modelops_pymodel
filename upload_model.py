@@ -43,7 +43,8 @@ model = pickle.load(open(model_filename, 'rb'))
 register_model(model = model, 
                name= modelname, 
                project= project,  
-               force=True)
+               force=True,
+               version = 'latest')
 
 ### adding extra files
 ### not needed but good practice
