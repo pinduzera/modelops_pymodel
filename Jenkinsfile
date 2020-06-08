@@ -19,9 +19,9 @@ pipeline {
           sh "python training_code.py"
                 }
           }
-      stage('Model Upload & publish') {
+    stage('Model Upload & publish') {
         steps {
-          sh "python model_upload.py"
+          sh "python upload_model.py"
 
                 }
           }

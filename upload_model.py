@@ -102,7 +102,7 @@ for i in range(len(filenames['file'])):
 
 try:
 
-    publish_model(modelname, publishdestination)
+    publish_model(modelname, publishdestination, replace = True)
 
 except Exception as e:
     
