@@ -20,7 +20,7 @@ f = open("session_id.txt", "r")
 session_id = f.read()
 f.close()
 
-conn = swat.CAS(#'pdcesx06182.exnet.sas.com', port=8777, protocol = 'http',
+conn = swat.CAS(#'pdcesx17145.exnet.sas.com', port=8777, protocol = 'http',
             'localhost', port = 5570, ## bug on swat 1.6.0
             caslib = 'casuser', username = 'sasdemo01',
             password = 'Orion123') #, session = session_id)
@@ -56,3 +56,5 @@ model.named_steps['lreg'].coef_
 # save the model to disk
 filename = 'pylreg.pickle'
 pickle.dump(model, open(filename, 'wb'))
+
+conn.terminate()

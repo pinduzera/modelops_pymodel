@@ -13,10 +13,12 @@ import pickle
 import pandas as pd
 import pzmm
 import sys
+import swat
 
 ####### Variables
 
 host = 'localhost'
+#host = 'pdcesx17145.exnet.sas.com'
 
 modelname = 'python_jk_lreg'
 
@@ -30,38 +32,55 @@ model_filename= 'pylreg.pickle'
 
 ########
 
+conn = swat.CAS(host, port=8777, protocol = 'http',
+            #'localhost', port = 5570, ## bug on swat 1.6.0
+            caslib = 'casuser', username = 'sasdemo01',
+            password = 'Orion123') #, session = session_id)
+
 s = Session(host, 'sasdemo', 'Orion123', verify_ssl = False)
 
 model = pickle.load(open(model_filename, 'rb'))
 
 
-#pred = loaded_model.predict(X_test)
-#pred_prob = result_predloaded_model.predict(X_test)
-#print(result)
+ctbl = conn.CASTable(name = 'hmeq', 
+                    caslib = 'public')
+table = ctbl.to_frame()
 
-### DON'T DO THAT IN PRODUCTION
-model_repository.delete_model(modelname)
-
-register_model(model = model, 
-               name= modelname, 
-               project= project,  
-               force=True)
-
-### adding extra files
-### not needed but good practice
-
-data = pd.read_csv(data_path, nrows = 5)
-                        
-### list inputs and outputs
-inputs = data[0:3].drop(['BAD'], axis=1)
+### avoid using variable names with . it will have error with DS2
+inputs = table.drop('BAD',axis =1).head()
 # Need one example of each var for guessing type
 ### can't have NaN
-inputs['DEBTINC'] = .5 
+#inputs['DEBTINC'] = .5 
 
-outputs = data.columns.to_list()[0]
+outputs = table.columns.to_list()[0]
 outputs = pd.DataFrame(columns=[outputs, 'P_BAD0', 'P_BAD1'])
 
 outputs.loc[len(outputs)] = [1, 0.5, 0.5]
+#model.predict_proba(inputs[:1])
+
+### DON'T DO THAT IN PRODUCTION
+
+model_exists = model_repository.get_model(modelname, refresh=False)
+
+#model_repository.delete_model(modelname)
+if model_exists == None:
+    print('Creating new model')
+    register_model(model = model, 
+                   name= modelname, 
+                   project= project,
+                   input = inputs,
+                   force=True)
+else:
+    print('Model exists, creting new verision')
+    register_model(model = model, 
+                   name= modelname, 
+                   project= project,
+                   input = inputs,
+                   force=True,
+                   version = 'latest')
+    
+### adding extra files
+### not needed but good practice
 path = Path.cwd()
 
 ####
@@ -76,8 +95,8 @@ JSONFiles.writeVarJSON(outputs, isInput=False, jPath=path)
 
 #### missing files files
 
-filenames = {'file':['inputVar.json','outputVar.json'],
-            'role':['input','output']}
+filenames = {'file':['inputVar.json','outputVar.json', 'training_code.py'],
+            'role':['input','output', 'train']}
             
 #### uploading files
 
@@ -104,11 +123,13 @@ for i in range(len(filenames['file'])):
 
 try:
 
-    publish_model(modelname, publishdestination, replace = True)
+    publish_model(modelname, publishdestination,
+                  replace = True)
 
 except Exception as e:
     
     result = str(e).find('The image already exists')
+    conn.terminate()
     
     if result != -1:
         print('The image already exists, probably no change for new version')
