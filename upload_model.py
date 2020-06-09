@@ -39,12 +39,13 @@ model = pickle.load(open(model_filename, 'rb'))
 #pred_prob = result_predloaded_model.predict(X_test)
 #print(result)
 
+### DON'T DO THAT IN PRODUCTION
+model_repository.delete_model(modelname)
 
 register_model(model = model, 
                name= modelname, 
                project= project,  
-               force=True,
-               version = 'latest')
+               force=True)
 
 ### adding extra files
 ### not needed but good practice
