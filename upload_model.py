@@ -47,7 +47,7 @@ ctbl = conn.CASTable(name = 'hmeq',
 table = ctbl.to_frame()
 
 ### avoid using variable names with . it will have error with DS2
-inputs = table.drop('BAD',axis =1).head()
+inputs = table.drop('BAD',axis =1)
 # Need one example of each var for guessing type
 ### can't have NaN
 #inputs['DEBTINC'] = .5 
