@@ -18,7 +18,7 @@ import swat
 ####### Variables
 
 host = 'localhost'
-#host = 'pdcesx17145.exnet.sas.com'
+host = 'pdcesx16159.exnet.sas.com'
 
 modelname = 'python_jk_lreg'
 
@@ -53,7 +53,7 @@ inputs = table.drop('BAD',axis =1).head()
 #inputs['DEBTINC'] = .5 
 
 outputs = table.columns.to_list()[0]
-outputs = pd.DataFrame(columns=[outputs, 'P_BAD0', 'P_BAD1'])
+outputs = pd.DataFrame(columns=[str(outputs), 'P_BAD0', 'P_BAD1'])
 
 outputs.loc[len(outputs)] = [1, 0.5, 0.5]
 #model.predict_proba(inputs[:1])
