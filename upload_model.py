@@ -68,7 +68,7 @@ if model_exists == None:
     register_model(model = model, 
                    name= modelname, 
                    project= project,
-                   input = inputs,
+                   input = inputs, ## somehow using a pd.df bug but SASdf don't
                    force=True)
 else:
     print('Model exists, creting new verision')
