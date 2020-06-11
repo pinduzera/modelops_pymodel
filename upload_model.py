@@ -18,7 +18,7 @@ import swat
 ####### Variables
 
 host = 'localhost'
-host = 'pdcesx16159.exnet.sas.com'
+#host = 'pdcesx16159.exnet.sas.com'
 
 modelname = 'python_jk_lreg'
 
@@ -71,7 +71,7 @@ if model_exists == None:
                    input = inputs, ## somehow using a pd.df bug but SASdf don't
                    force=True)
 else:
-    print('Model exists, creting new verision')
+    print('Model exists, creting new version')
     register_model(model = model, 
                    name= modelname, 
                    project= project,
