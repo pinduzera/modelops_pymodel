@@ -26,7 +26,7 @@ conn = swat.CAS(#'pdcesx14138.exnet.sas.com', port=8777, protocol = 'http',
             caslib = 'casuser', username = 'sasdemo',
             password = 'Orion123') #, session = session_id)
 
-ctbl = conn.CASTable(name = 'hmeq', 
+ctbl = conn.CASTable(name = 'iris', 
                     caslib = 'public')
 table = ctbl.to_frame()
 table
