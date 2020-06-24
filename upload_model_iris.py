@@ -24,8 +24,8 @@ import swat
 
 ####### Variables
 
-#host = 'localhost'
-host = 'pdcesx14138.exnet.sas.com'
+host = 'localhost'
+#host = 'pdcesx14138.exnet.sas.com'
 
 modelname = 'python_jk_lreg_iris'
 
@@ -39,8 +39,8 @@ model_filename= 'pylreg.pickle'
 
 ########
 
-conn = swat.CAS(host, port=8777, protocol = 'http',
-            #'localhost', port = 5570, ## bug on swat 1.6.0
+conn = swat.CAS(#host, port=8777, protocol = 'http',
+            'localhost', port = 5570, ## bug on swat 1.6.0
             caslib = 'casuser', username = 'sasdemo01',
             password = 'Orion123') #, session = session_id)
 
