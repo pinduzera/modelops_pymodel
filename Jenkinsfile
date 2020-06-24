@@ -11,17 +11,17 @@ pipeline {
     stages {
       stage('Check Data') {
         steps {
-          sh "python verify_tables.py"
+          sh "python verify_tables_iris.py"
             }
           }
       stage('Model Training') {
         steps {
-          sh "python training_code.py"
+          sh "python training_code_iris.py"
                 }
           }
     stage('Model Upload & publish') {
         steps {
-          sh "python upload_model.py"
+          sh "python upload_model_iris.py"
 
                 }
           }

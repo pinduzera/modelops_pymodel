@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Wed Jun 24 17:32:35 2020
+
+@author: edhell
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Thu Jun  4 11:22:46 2020
 
 @author: edhell
@@ -20,9 +27,9 @@ import swat
 #host = 'localhost'
 host = 'pdcesx14138.exnet.sas.com'
 
-modelname = 'python_jk_lreg'
+modelname = 'python_jk_lreg_iris'
 
-project = 'hmeq_os'
+project = 'iris_os'
 
 publishdestination = 'maslocal'
 
@@ -34,28 +41,29 @@ model_filename= 'pylreg.pickle'
 
 conn = swat.CAS(host, port=8777, protocol = 'http',
             #'localhost', port = 5570, ## bug on swat 1.6.0
-            caslib = 'casuser', username = 'sasdemo',
+            caslib = 'casuser', username = 'sasdemo01',
             password = 'Orion123') #, session = session_id)
 
 s = Session(host, 'sasdemo', 'Orion123', verify_ssl = False)
 
 model = pickle.load(open(model_filename, 'rb'))
 
+ctbl = conn.read_csv('./data/iris.csv',
+                     casout = {'caslib': 'public'})
 
-ctbl = conn.CASTable(name = 'hmeq', 
-                    caslib = 'public')
 table = ctbl.to_frame()
+table
 
 ### avoid using variable names with . it will have error with DS2
-inputs = table.drop('BAD',axis =1)
+inputs = table.drop('Species',axis =1)
 # Need one example of each var for guessing type
 ### can't have NaN
 #inputs['DEBTINC'] = .5 
 
-outputs = table.columns.to_list()[0]
-outputs = pd.DataFrame(columns=[str(outputs), 'P_BAD0', 'P_BAD1'])
+outputs = table.columns.to_list()[4]
+outputs = pd.DataFrame(columns=[str(outputs), 'P_set', 'P_vers', 'P_virg'])
 
-outputs.loc[len(outputs)] = [1, 0.5, 0.5]
+outputs.loc[len(outputs)] = ['virginica', 0.5, 0.5, .5]
 #model.predict_proba(inputs[:1])
 
 ### DON'T DO THAT IN PRODUCTION
@@ -63,7 +71,7 @@ outputs.loc[len(outputs)] = [1, 0.5, 0.5]
 model_exists = model_repository.get_model(modelname, refresh=False)
 
 
-model_repository.delete_model(modelname)
+#model_repository.delete_model(modelname)
 if model_exists == None:
     print('Creating new model')
     register_model(model = model, 
@@ -73,6 +81,7 @@ if model_exists == None:
                    force=True)
 else:
     print('Model exists, creting new version')
+    model_repository.delete_model_contents(modelname)
     register_model(model = model, 
                    name= modelname, 
                    project= project,
@@ -96,7 +105,7 @@ JSONFiles.writeVarJSON(outputs, isInput=False, jPath=path)
 
 #### missing files files
 
-filenames = {'file':['inputVar.json','outputVar.json', 'training_code.py'],
+filenames = {'file':['inputVar.json','outputVar.json', 'training_code_iris.py'],
             'role':['input','output', 'train']}
             
 #### uploading files
@@ -124,16 +133,15 @@ for i in range(len(filenames['file'])):
 
 try:
 
-    publish_model(modelname, publishdestination,
+    module = publish_model(modelname, publishdestination,
                   replace = True)
-
-except Exception as e:
     
-    result = str(e).find('The image already exists')
+    
+    module.predict(3, 4, 2.5, 0.2)
+    module.predict_proba(3, 4, 2.5, 0.2)
+    
     conn.terminate()
+except:
     
-    if result != -1:
-        print('The image already exists, probably no change for new version')
-    else:
-        print('Another error, check logs')
-        sys.exit(1)
+    print('Something went wrong during publication')
+    sys.exit(1)
