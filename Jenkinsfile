@@ -38,7 +38,7 @@ pipeline {
         always {
             cleanWs deleteDirs: true, notFailBuild: true
             echo 'The job is done!'
-            telegramSend(messsage:"test message")
+            telegramSend("messsage": "test message")
         }
         
         success {
