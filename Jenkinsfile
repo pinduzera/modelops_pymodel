@@ -39,13 +39,9 @@ pipeline {
             cleanWs deleteDirs: true, notFailBuild: true
             echo 'The job is done!'
 
-            script{
-                withCredentials([string(credentialsId: 'telegramToken', variable: 'TOKEN'),
-                string(credentialsId: 'telegramChatId', variable: 'CHAT_ID')]) {
-                telegramSend(message:"test message",
-                             chatId:"${CHAT_ID}")
-                    }
-                }
+            withCredentials([string(credentialsId: 'telegramToken', variable: 'TOKEN'),
+                string(credentialsId: 'telegramChatId', variable: 'CHAT_ID')])
+            curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=${CHAT_ID} -d text="Test Message"
                 
         }
         
