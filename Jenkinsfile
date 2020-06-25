@@ -36,14 +36,13 @@ pipeline {
         
     }
       post {
-      step([$class: 'TelegramBotPublisher']):{
-      }
+
         always {
             cleanWs deleteDirs: true, notFailBuild: true
             echo 'The job is done!'
         }
         always {
-        telegramSend(messsage:"test message")
+            telegramSend(messsage:"test message")
         }
         success {
             echo 'Model is trained and deployed!'
