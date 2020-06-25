@@ -41,15 +41,26 @@ pipeline {
 
             withCredentials([string(credentialsId: 'telegramToken', variable: 'TOKEN'),
                 string(credentialsId: 'telegramChatId', variable: 'CHAT_ID')]){
-            sh  '''curl -s -X POST https://api.telegram.org/bot"$TOKEN"/sendMessage -d chat_id="$CHAT_ID" -d text="Test Message" '''
+            sh  '''curl -s -X POST https://api.telegram.org/bot"$TOKEN"/sendMessage -d chat_id="$CHAT_ID" -d text="Your build is ready" '''
                 }
         }
         
         success {
             echo 'Model is trained and deployed!'
+            
+                        withCredentials([string(credentialsId: 'telegramToken', variable: 'TOKEN'),
+                string(credentialsId: 'telegramChatId', variable: 'CHAT_ID')]){
+            sh  '''curl -s -X POST https://api.telegram.org/bot"$TOKEN"/sendMessage -d chat_id="$CHAT_ID" -d text="And it worked :)" '''
+                }
+        }
         }
         failure {
             echo 'Something went badly wrong!'
+                        withCredentials([string(credentialsId: 'telegramToken', variable: 'TOKEN'),
+                string(credentialsId: 'telegramChatId', variable: 'CHAT_ID')]){
+            sh  '''curl -s -X POST https://api.telegram.org/bot"$TOKEN"/sendMessage -d chat_id="$CHAT_ID" -d text="But it failed :(" '''
+                }
+        }
         }
     }
 
