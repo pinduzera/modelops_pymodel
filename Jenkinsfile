@@ -40,9 +40,9 @@ pipeline {
             echo 'The job is done!'
 
             withCredentials([string(credentialsId: 'telegramToken', variable: 'TOKEN'),
-                string(credentialsId: 'telegramChatId', variable: 'CHAT_ID')])
-            curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=${CHAT_ID} -d text="Test Message"
-                
+                string(credentialsId: 'telegramChatId', variable: 'CHAT_ID')]){
+            sh  '''curl -s -X POST https://api.telegram.org/bot"$TOKEN"/sendMessage -d chat_id="$CHAT_ID" -d text="Test Message" '''
+                }
         }
         
         success {
