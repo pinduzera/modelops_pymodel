@@ -31,10 +31,7 @@ pipeline {
 
                 }
           }
-       steps {
 
-        
-    }
       post {
 
         always {
