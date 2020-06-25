@@ -5,13 +5,6 @@ Created on Wed Jun 24 17:32:35 2020
 @author: edhell
 """
 
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jun  4 11:22:46 2020
-
-@author: edhell
-"""
-
 from sasctl import Session
 from sasctl import register_model, publish_model
 from sasctl.services import model_repository
@@ -25,7 +18,7 @@ import swat
 ####### Variables
 
 host = 'localhost'
-#host = 'pdcesx14138.exnet.sas.com'
+#host = 'pdcesx15130.exnet.sas.com'
 
 modelname = 'python_jk_lreg_iris'
 
@@ -33,7 +26,7 @@ project = 'iris_os'
 
 publishdestination = 'maslocal'
 
-data_path = './data/hmeq_score.csv'
+data_path = './data/iris.csv'
 
 model_filename= 'pylreg.pickle'
 
@@ -48,7 +41,7 @@ s = Session(host, 'sasdemo', 'Orion123', verify_ssl = False)
 
 model = pickle.load(open(model_filename, 'rb'))
 
-ctbl = conn.read_csv('./data/iris.csv',
+ctbl = conn.read_csv(data_path,
                      casout = {'caslib': 'public'})
 
 table = ctbl.to_frame()
@@ -88,7 +81,8 @@ else:
                    input = inputs,
                    force=True,
                    version = 'latest')
-    
+
+
 ### adding extra files
 ### not needed but good practice
 path = Path.cwd()
@@ -102,6 +96,7 @@ JSONFiles.writeVarJSON(inputs, isInput=True, jPath=path)
 
 ### write outputVar.json
 JSONFiles.writeVarJSON(outputs, isInput=False, jPath=path)
+
 
 #### missing files files
 

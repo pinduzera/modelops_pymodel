@@ -14,7 +14,7 @@ pipeline {
           sh "python verify_tables_iris.py"
             }
           }
-      stage('Model Training') {
+      stage('Model Training & Validation') {
         steps {
           sh "python training_code_iris.py"
                 }
@@ -25,19 +25,13 @@ pipeline {
 
                 }
           }
-/*
-      stage('Model Validation') {
-        steps {
-          sh "Rscript --vanilla model_validation.R"
-                }
-          }
       stage('Testing Publication') {
         steps {
-          sh "python test_pub.py"
+          sh "python pub_test.py"
 
                 }
           }
-*/            
+            
         
     }
       post { 

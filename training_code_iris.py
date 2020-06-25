@@ -53,7 +53,20 @@ model = Pipeline(steps=[
 
 model.fit(X, Y)
 
+
 model.named_steps['lreg'].coef_
+
+##### MODEL VALIDATION
+
+from sklearn.model_selection import cross_validate
+acc = cross_validate(model, X, Y, cv = 5, scoring = ['accuracy'])
+
+print('\nAccuracy Validation per 5 fold!')
+
+print(acc['test_accuracy'])
+
+
+print('\nTesting Model')
 
 x = X.iloc[100:101, :]
 #x[1] = None
