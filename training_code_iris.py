@@ -34,7 +34,7 @@ table
 ### avoid using variable names with . it will have error with DS2
 X = table.drop('Species',axis =1)
 Y = table.Species.astype('category')
-test_size = 0.33
+test_size = 0.4
 seed = 7
 
 X_train, X_test, Y_train, Y_test = model_selection.train_test_split(
