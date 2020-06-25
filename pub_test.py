@@ -43,7 +43,7 @@ steps[0]['id']
 
 steps[0]['links']
 
-print(help(module.score))
+print(help(module.predict))
 
 res = module.predict(5.0, 2.0, 3.5, 1.0)
 res2 = module.predict_proba(5.0, 2.0, 3.5, 1.0)
