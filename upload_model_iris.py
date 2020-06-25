@@ -132,8 +132,10 @@ try:
                   replace = True)
     
     
-    module.predict(3, 4, 2.5, 0.2)
-    module.predict_proba(3, 4, 2.5, 0.2)
+    r1 = module.predict(3, 4, 2.5, 0.2)
+    r2 = module.predict_proba(3, 4, 2.5, 0.2)
+    
+    print(r1, r2)
     
     conn.terminate()
 except:
