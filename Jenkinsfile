@@ -38,8 +38,13 @@ pipeline {
         always {
             cleanWs deleteDirs: true, notFailBuild: true
             echo 'The job is done!'
-            telegramSend("message": "test message",
-                        "chatId": -364345475)
+
+            script{
+                withCredentials([string(credentialsId: 'telegramToken', variable: 'TOKEN'),
+                string(credentialsId: 'telegramChatId', variable: CHAT_ID)]) {
+                telegramSend(messsage:"test message",chatId:${CHAT_ID})
+                }
+                
         }
         
         success {
