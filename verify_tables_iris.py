@@ -39,7 +39,8 @@ for key in tables:
           tbl = conn.read_csv('./data/' + key + '.csv', 
                     casout = {'name': key,
                               'caslib':'public',
-                              'promote': True})
+                              'promote': True},
+                              na_values = '           .')
           tables[key] = True
           
         except Exception as e:
