@@ -37,7 +37,8 @@ for key in tables:
         
         try:
           tbl = conn.read_csv('./data/' + key + '.csv', 
-                    casout = {'caslib':'public',
+                    casout = {'name': key,
+                              'caslib':'public',
                               'promote': True})
           tables[key] = True
           
