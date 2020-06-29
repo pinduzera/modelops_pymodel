@@ -9,7 +9,7 @@ Created on Thu Jun  4 15:01:52 2020
 import swat
 import sys
 
-conn = swat.CAS(#'pdcesx06182.exnet.sas.com', port=8777, protocol = 'http',
+conn = swat.CAS(#'pdcesx15151.exnet.sas.com', port=8777, protocol = 'http',
              'localhost', port = 5570, ## bug on swat 1.6.0
             caslib = 'casuser', username = 'sasdemo01',
             password = 'Orion123')
@@ -32,12 +32,22 @@ for i in tablenames:
     tables[i] =  conn.table.tableExists(caslib= 'public',
                         name= i)['exists']
 
+
 for key in tables: 
     if(tables[key] == 2):   
         tables[key] = True
     else:
-        tables[key] = False
-tables
+        print('Uploading table: ' + key)
+        
+        try:
+          tbl = conn.read_csv('./data/' + key + '.csv', 
+                    casout = {'caslib':'public',
+                              'promote': True})
+          tables[key] = True
+          
+        except Exception as e:
+          tables[key] = False
+
 
 if (all(value == True for value in tables.values())):
 

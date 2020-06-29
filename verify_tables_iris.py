@@ -33,9 +33,17 @@ for key in tables:
     if(tables[key] == 2):   
         tables[key] = True
     else:
-        tables[key] = False
-tables
-
+        print('Uploading table: ' + key)
+        
+        try:
+          tbl = conn.read_csv('./data/' + key + '.csv', 
+                    casout = {'caslib':'public',
+                              'promote': True})
+          tables[key] = True
+          
+        except Exception as e:
+          tables[key] = False
+          
 if (all(value == True for value in tables.values())):
 
   f = open("session_id.txt", "w")
