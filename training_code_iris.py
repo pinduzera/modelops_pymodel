@@ -21,10 +21,10 @@ import pickle
 #session_id = f.read()
 #f.close()
 
-conn = swat.CAS(#'pdcesx14138.exnet.sas.com', port=8777, protocol = 'http',
+conn = swat.CAS(#'hostname.com', port=8777, protocol = 'http',
             'localhost', port = 5570, ## bug on swat 1.6.0
-            caslib = 'casuser', username = 'sasdemo',
-            password = 'Orion123') #, session = session_id)
+            caslib = 'casuser', username = 'username',
+            password = 's3cr3t!') #, session = session_id)
 
 ctbl = conn.CASTable(name = 'iris', 
                     caslib = 'public')

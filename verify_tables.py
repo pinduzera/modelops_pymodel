@@ -9,10 +9,10 @@ Created on Thu Jun  4 15:01:52 2020
 import swat
 import sys
 
-conn = swat.CAS(#'pdcesx15151.exnet.sas.com', port=8777, protocol = 'http',
+conn = swat.CAS(#'hostname.com', port=8777, protocol = 'http',
              'localhost', port = 5570, ## bug on swat 1.6.0
-            caslib = 'casuser', username = 'sasdemo01',
-            password = 'Orion123')
+            caslib = 'casuser', username = 'username01',
+            password = 's3cr3t!')
 
 session_id = list(conn.session.sessionId().values())[0]
 

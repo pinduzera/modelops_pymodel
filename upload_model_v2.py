@@ -25,7 +25,7 @@ import swat
 ####### Variables
 
 host = 'localhost'
-#host = 'pdcesx01061.exnet.sas.com'
+#host = 'hostname.com'
 
 modelname = 'python_jk_lreg'
 
@@ -41,10 +41,10 @@ model_filename= 'pylreg.pickle'
 
 conn = swat.CAS(#host, port=8777, protocol = 'http',
             'localhost', port = 5570, ## bug on swat 1.6.0
-            caslib = 'casuser', username = 'sasdemo01',
-            password = 'Orion123') #, session = session_id)
+            caslib = 'casuser', username = 'username01',
+            password = 's3cr3t!') #, session = session_id)
 
-s = Session(host, 'sasdemo', 'Orion123', verify_ssl = False)
+s = Session(host, 'username', 's3cr3t!', verify_ssl = False)
 
 model = pickle.load(open(model_filename, 'rb'))
 
@@ -96,7 +96,7 @@ JSONFiles.writeModelPropertiesJSON(modelName=modelname,
                                    numTargetCategories=len(yCategory),
                                    eventProbVar='P_1',
                                    jPath=path,
-                                   modeler='sasdemo')
+                                   modeler='username')
 
 
 pzmm.PickleModel.pickleTrainedModel(model, modelname, path)

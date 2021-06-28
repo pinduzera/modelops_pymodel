@@ -12,7 +12,7 @@ from sasctl.services import microanalytic_score as mas
 ####### Variables #################
 
 host = 'localhost'
-#host = 'pdcesx15130.exnet.sas.com'
+#host = 'hostname.com'
 
 publishdestination = 'maslocal'
 
@@ -20,9 +20,9 @@ modelname = 'python_jk_lreg_iris'
 
 project = 'iris_os'
 
-user = 'sasdemo'
+user = 'username'
 
-password = 'Orion123'
+password = 's3cr3t!'
 
 #astore_table = 'gb_astore'
 #astore_caslib = 'public'
